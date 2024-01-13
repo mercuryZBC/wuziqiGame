@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "windows",
+            "program": "${workspaceFolder}/build/Debug/test.exe",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "linux",
+            "program": "${workspaceFolder}/build/imServer",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
