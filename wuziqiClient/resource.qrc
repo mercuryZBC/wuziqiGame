@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/sound/chessone.wav</file>
+        <file>res/sound/lose.wav</file>
+        <file>res/sound/win.wav</file>
+        <file>res/image/chessboardBack.png</file>
+        <file>res/tx/0.png</file>
+        <file>res/tx/1.png</file>
+        <file>res/tx/2.png</file>
+        <file>res/tx/3.png</file>
+        <file>res/tx/4.png</file>
+        <file>res/tx/5.png</file>
+        <file>res/tx/6.png</file>
+        <file>res/tx/7.png</file>
+        <file>res/tx/8.png</file>
+        <file>res/tx/9.png</file>
+        <file>res/tx/10.png</file>
+        <file>res/tx/11.png</file>
+        <file>res/tx/12.png</file>
+        <file>res/tx/13.png</file>
+        <file>res/tx/14.png</file>
+        <file>res/tx/15.png</file>
+        <file>res/tx/16.png</file>
+        <file>res/tx/17.png</file>
+        <file>res/tx/18.png</file>
+        <file>res/tx/19.png</file>
+        <file>res/tx/20.png</file>
+        <file>res/tx/21.png</file>
+        <file>res/tx/22.png</file>
+        <file>res/tx/23.png</file>
+        <file>res/tx/24.png</file>
+        <file>res/tx/25.png</file>
+        <file>res/tx/27.png</file>
+        <file>res/tx/28.png</file>
+        <file>res/tx/29.png</file>
+        <file>res/tx/30.png</file>
+        <file>res/tx/31.png</file>
+        <file>res/tx/32.png</file>
+        <file>res/tx/33.png</file>
+        <file>res/tx/34.png</file>
+        <file>res/tx/35.png</file>
+        <file>res/image/black.png</file>
+        <file>res/image/write.png</file>
+        <file>res/tx/999.png</file>
+    </qresource>
+</RCC>
