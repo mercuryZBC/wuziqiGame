@@ -22,6 +22,7 @@ GameLobbyDialog::GameLobbyDialog(QString userId,QWidget *parent) :
     m_gridLayout->setContentsMargins(0,0,0,0);
     ui->wdg_roomList->setLayout(m_gridLayout);
     qRegisterMetaType<STRU_CREATE_ROOM_RS>("STRU_CREATE_ROOM_RS");
+    setWindowTitle("在线游戏");
     connect(m_pKernel,&Kernel::SIG_createRoomRs,this,&GameLobbyDialog::createRoomRsComing);
     connect(m_pKernel,&Kernel::SIG_loadExistRoomRs,this,&GameLobbyDialog::loadExistRoomRsComing);
     connect(m_pKernel,&Kernel::SIG_roomIsBeClosed,this,&GameLobbyDialog::roomBeCloseComing);

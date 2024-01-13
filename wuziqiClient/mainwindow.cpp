@@ -19,6 +19,7 @@ MainWindow::MainWindow(QString userId, QWidget *parent): QMainWindow(parent)
     m_userId = userId;
     isOnlineRq = false;
     m_pGameDialog = nullptr;
+    setWindowTitle("五子棋");
     //加载已经存在的房间
 }
 
@@ -53,7 +54,6 @@ void MainWindow::on_pb_online_clicked()
         connect(m_pKernel,&Kernel::SIG_loadExistRoomRs,m_pGameLobby,&GameLobbyDialog::loadExistRoomRsComing);
         connect(m_pKernel,&Kernel::SIG_roomIsBeClosed,m_pGameLobby,&GameLobbyDialog::roomBeCloseComing);
         connect(m_pGameLobby,&GameLobbyDialog::SIG_showMainWindow,this,&MainWindow::show);
-        setWindowTitle("五子棋");
         m_pKernel->sendLoginRq(m_userId);
         m_pKernel->loadExistRoomRq();
         isOnlineRq = true;
