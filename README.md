@@ -23,3 +23,8 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 对局结束界面
 
 ![image-20240113140319320](https://s2.loli.net/2024/01/13/onGpsuwBd2NDTv5.png)
+
+## 服务端讲解
+
+1、网络io模型 epoll LT +阻塞IO
+
