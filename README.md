@@ -26,5 +26,35 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
 ## 服务端讲解
 
-1、网络io模型 epoll LT +阻塞IO
+### 1. epoll事件监听
+
+~~~cpp
+//事件监听循环代码
+void Block_Epoll_Net::EventLoop()
+{
+    printf("EventLoop:server running\n");
+    int  i = 0;
+    while (1) {
+        /* 等待事件发生 */
+        int nfd = epoll_wait( m_epoll_fd, events, MAX_EVENTS+1, 1000);
+        if (nfd < 0) {
+            printf("epoll_wait error, exit\n");
+            continue;
+        }
+        for (i = 0; i < nfd; i++) {
+            struct myevent_s *ev = (struct myevent_s *)events[i].data.ptr;
+            int fd = ev->fd;
+            if ( (events[i].events & EPOLLIN) ) {
+                if( fd == m_listenfd )
+                    accept_event();
+                else
+                    recv_event( ev );
+            }
+            if ((events[i].events & EPOLLOUT) ) {
+                epollout_event( ev );
+            }
+        }
+    }
+}
+~~~
 
