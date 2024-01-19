@@ -94,6 +94,7 @@ typedef int MSG_TYPE;
 
 #define _DEF_TCP_PROTO_BASE (2000)
 #define _DEF_TCP_PROTO_LOGIN_RQ (_DEF_TCP_PROTO_BASE+1)//登录请求
+#define _DEF_TCP_PROTO_LOGIN_RQ_USEPASSWD (_DEF_TCP_PROTO_BASE+20)//登录请求使用密码
 #define _DEF_TCP_PROTO_LOGIN_RS (_DEF_TCP_PROTO_BASE+2)//登录返回
 
 #define _DEF_TCP_PROTO_FRIENDINFO_RQ (_DEF_TCP_PROTO_BASE+3)//好友信息拉取
@@ -124,6 +125,13 @@ struct STRU_LOGIN_RQ {//登录请求
     STRU_LOGIN_RQ() :type(_DEF_TCP_PROTO_LOGIN_RQ) {}
     MSG_TYPE type;
     char userId[12];
+};
+
+struct STRU_LOGIN_RQ_USEPASSWD {//登录请求
+    STRU_LOGIN_RQ_USEPASSWD() :type(_DEF_TCP_PROTO_LOGIN_RQ_USEPASSWD) {}
+    MSG_TYPE type;
+    char userId[12];
+    char passwd[21];
 };
 
 enum LoginState {

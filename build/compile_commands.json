@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/GameRoom.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/GameRoom.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/Mysql.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/Mysql.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/TCPKernel.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/TCPKernel.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/Thread_pool.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/Thread_pool.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/Timer.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/Timer.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/clogic.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/clogic.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/err_str.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/err_str.cpp"
+},
+{
+  "directory": "/home/gth/wuziqiGame/build",
+  "command": "/usr/bin/clang++   -I/home/gth/wuziqiGame/wuziqiServer/include   -std=c++11 -pthread -g   -std=gnu++11 -o CMakeFiles/wuziqiServer.dir/src/main.cpp.o -c /home/gth/wuziqiGame/wuziqiServer/src/main.cpp",
+  "file": "/home/gth/wuziqiGame/wuziqiServer/src/main.cpp"
+}
+]
