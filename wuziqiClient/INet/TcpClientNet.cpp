@@ -1,10 +1,16 @@
-#include"TcpClientNet.h"
+﻿#include"TcpClientNet.h"
 #include"Config/config.h"
 #include<process.h>
 #include"../NetMediator/TcpClientNetMediator.h"
+#include<QCoreApplication>
+#include<QSettings>
+#include<QFileInfo>
 TcpClientNet::TcpClientNet(INetMediator* netMediator):m_sock(NULL),m_isStop(0)
 {
     m_pMediator=netMediator;
+    m_ip = "182.92.101.102";
+    m_port="12345";
+    loadIniFile();
 }
 
 TcpClientNet::~TcpClientNet()
@@ -59,8 +65,8 @@ bool TcpClientNet::InitNet()
 
         sockaddr_in serverAddr;
         serverAddr.sin_family=AF_INET;
-        serverAddr.sin_addr.S_un.S_addr=inet_addr(_DEF_SERVER_IP);
-        serverAddr.sin_port=htons(_DEF_TCP_PORT);
+        serverAddr.sin_addr.S_un.S_addr=inet_addr(m_ip.toStdString().c_str());
+        serverAddr.sin_port=htons(m_port.toUShort());
 
         if (connect(m_sock, (SOCKADDR*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR) {
                closesocket(m_sock);
@@ -108,6 +114,32 @@ void TcpClientNet::UninitNet()
     }
 
 
+}
+
+void TcpClientNet::loadIniFile()
+{
+    //获取exe目录
+    QString path = QCoreApplication::applicationDirPath()+"/config.ini";
+    QFileInfo info(path);
+    QSettings setting(path,QSettings::IniFormat);
+    if(info.exists()){
+        setting.beginGroup("net");
+        QVariant strIp = setting.value("ip","");
+        QVariant strPort = setting.value("port","");
+        if(!strIp.toString().isEmpty()){
+            m_ip = strIp.toString();
+        }
+        if(!strPort.toString().isEmpty()){
+            m_port = strPort.toString();
+        }
+        setting.endGroup();
+    }else{
+        //打开组
+        setting.beginGroup("net");
+        setting.setValue("ip",m_ip);
+        setting.setValue("port",m_port);
+        setting.endGroup();
+    }
 }
 
 void TcpClientNet::recvData()

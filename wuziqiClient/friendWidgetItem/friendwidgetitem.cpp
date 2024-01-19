@@ -1,4 +1,4 @@
-#include "friendwidgetitem.h"
+﻿#include "friendwidgetitem.h"
 #include "ui_friendwidgetitem.h"
 #include<QBitmap>
 friendWidgetItem::friendWidgetItem(CLIENT_FRIEND_INFO struFriendInfo, QWidget *parent) :
@@ -84,7 +84,7 @@ void friendWidgetItem::setOnline()
 {
         qDebug()<<__func__;
         state=online;
-        QString iconPath=QString(":/tx/%1.png").arg(iconId);
+        QString iconPath=QString(":/res/tx/%1.png").arg(iconId);
         ui->pb_icon->setIcon(QIcon(iconPath));
         qDebug()<<this->name<<" is online";
         repaint();

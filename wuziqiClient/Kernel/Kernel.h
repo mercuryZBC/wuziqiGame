@@ -24,8 +24,10 @@ public:
     INetMediator* m_pMedia;
     static Kernel* getInstance();
     static void destoryInstance(Kernel*& pKernel);
-public:
+public slots:
     void sendLoginRq(QString userId);
+    void sendLoginRq(QString userId,QString passwd);
+    void sendRegisterRq(QString userId,QString name,QString passwd);
     void getFriendList();
 public://处理TCP消息
     void bindTypeAndFun();//绑定协议头类型和对应处理函数
@@ -34,6 +36,7 @@ public://处理TCP消息
     void dealFriendInfoResult(char* buf);
     void dealFriendOnline(char* buf);
     void dealRoomIsBeClosed(char* buf);
+    void dealRegisterRs(char* buf);
 public:
     void dealCreateRoomRs(char *buf);
     void dealLoadExistRoomRs(char *buf);
@@ -49,6 +52,8 @@ public:
     void dealOpponentChess(char* buf);//对手chess
 
     void dealGameOver(char* buf);
+    //处理下线
+    void dealOfflineRq();
 signals:
     //登录信息到来信号 ->gameLobby
     void SIG_loginResult(int state,int iconId,QString userName,QString feeling);
@@ -69,6 +74,7 @@ signals:
     void SIG_opponentChess(STRU_PLAYER_CHESS);
     void SIG_gameOver(bool winSide);
     void SIG_gameClear();
+    void SIG_Register(int statusCode);
 public slots:
     void dealPlayChess(STRU_PLAYER_CHESS playerChess);
 };

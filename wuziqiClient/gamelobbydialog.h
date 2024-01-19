@@ -1,4 +1,4 @@
-#ifndef GAMELOBBYDIALOG_H
+﻿#ifndef GAMELOBBYDIALOG_H
 #define GAMELOBBYDIALOG_H
 
 #include <QDialog>
@@ -9,6 +9,7 @@
 #include<QVBoxLayout>
 #include"gameroomwidgetitem.h"
 #include"gamedialog.h"
+#include"logindialog.h"
 namespace Ui {
 class GameLobbyDialog;
 }
@@ -21,7 +22,9 @@ public:
     QString m_userName;
     Kernel* m_pKernel;
     explicit GameLobbyDialog(QString userId,QWidget *parent = nullptr);
+    explicit GameLobbyDialog(QWidget *parent = nullptr);
     ~GameLobbyDialog();
+    void init();
 private:
     QVBoxLayout* m_vbLayout;
     QGridLayout*  m_gridLayout;
@@ -37,6 +40,7 @@ private:
 public:
 
 public slots:
+    void onLoginRq(QString userid,QString passwd);
     //登录结果到来
     void LoginRsComing(int state,int iconId,QString userName,QString feeling);
     //拉取好友列表
@@ -65,6 +69,8 @@ signals:
     // QWidget interface
 protected:
     void closeEvent(QCloseEvent *event) override;
+private:
+    LoginDialog* m_pLoginDialog =nullptr;
 };
 
 #endif // GAMELOBBYDIALOG_H

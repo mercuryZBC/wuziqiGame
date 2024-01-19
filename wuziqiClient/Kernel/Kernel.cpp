@@ -8,6 +8,8 @@
 #include<string.h>
 #include<winsock2.h>
 #include<string.h>
+#include<QCoreApplication>
+#include<QSettings>
 #include"Kernel.h"
 #include"Config/ClientConfig.h"
 Kernel* Kernel::m_pKernel=nullptr;
@@ -79,6 +81,29 @@ void Kernel::sendLoginRq(QString userId)
 
 }
 
+void Kernel::sendLoginRq(QString userId, QString passwd)
+{
+    qDebug()<<"Kernel::sendLoginRq use passwd";
+    STRU_LOGIN_RQ_USEPASSWD loginRq;
+    memset(loginRq.userId,0,sizeof(loginRq.userId));
+    memset(loginRq.passwd,0,sizeof(loginRq.passwd));
+    strncpy(loginRq.userId,userId.toStdString().c_str(),userId.length());
+    strncpy(loginRq.passwd,passwd.toStdString().c_str(),passwd.length());
+    m_pMedia->SendData(NULL,(char*)&loginRq,sizeof(loginRq));
+
+}
+
+void Kernel::sendRegisterRq(QString userId, QString name, QString passwd)
+{
+    STRU_REGISTER_RQ registerRq;
+    memset(&registerRq,0,sizeof(registerRq));
+    registerRq.type = _DEF_TCP_PROTO_REGISTER_RQ;
+    strncpy(registerRq.RegisterId,userId.toStdString().c_str(),userId.length());
+    strncpy(registerRq.RegisterName,name.toStdString().c_str(),name.length());
+    strncpy(registerRq.RegisterPasswd,passwd.toStdString().c_str(),passwd.length());
+    m_pMedia->SendData(NULL,(char*)&registerRq,sizeof(registerRq));
+}
+
 void Kernel::getFriendList()
 {
     qDebug()<<"Kernel::getFriendList";
@@ -89,6 +114,7 @@ void Kernel::getFriendList()
 void Kernel::bindTypeAndFun()
 {
     m_mapTypeToFun[_DEF_TCP_PROTO_LOGIN_RS] = &Kernel::dealLoginResult;
+
     m_mapTypeToFun[_DEF_TCP_PROTO_FRIENDINFO_RS] = &Kernel::dealFriendInfoResult;
     m_mapTypeToFun[_DEF_TCP_FRIEND_ONLINE]=&Kernel::dealFriendOnline;
     m_mapTypeToFun[_DEF_TCP_PROTO_CREATE_ROOM_RS] = &Kernel::dealCreateRoomRs;
@@ -100,6 +126,7 @@ void Kernel::bindTypeAndFun()
     m_mapTypeToFun[_DEF_TCP_PROTO_PLAYER_CHESS] = &Kernel::dealOpponentChess;
     m_mapTypeToFun[_DEF_TCP_PROTO_GAME_OVER] = &Kernel::dealGameOver;
     m_mapTypeToFun[_DEF_TCP_PROTO_GAME_CLEAR] = &Kernel::dealGameClear;
+    m_mapTypeToFun[_DEF_TCP_PROTO_REGISTER_RS] = &Kernel::dealRegisterRs;
 }
 
 void Kernel::dealReadyData(long lSendip, char *buf, int nLen){
@@ -155,6 +182,14 @@ void Kernel::dealRoomIsBeClosed(char *buf)
     emit SIG_roomIsBeClosed(roomClosePack.roomId);
 }
 
+void Kernel::dealRegisterRs(char *buf)
+{
+    qDebug()<<"Kernel::dealRoomIsClosed";
+    STRU_REGISTER_RS registerRs = *(STRU_REGISTER_RS*)buf;
+    emit SIG_Register(registerRs.registerState);
+
+}
+
 void Kernel::createRoom(QString userId)
 {
     qDebug()<<"Kernel::createRoom";
@@ -180,6 +215,13 @@ void Kernel::dealGameOver(char *buf)
     STRU_GAME_OVER gameOverPack = *(STRU_GAME_OVER*)buf;
     emit SIG_gameOver(gameOverPack.winSide);
 }
+
+void Kernel::dealOfflineRq()
+{
+    STRU_OFFLINE_RQ offlineRq;
+    m_pMedia->SendData(NULL,(char*)&offlineRq,sizeof(offlineRq));
+}
+
 
 void Kernel::dealPlayChess(STRU_PLAYER_CHESS playerChess)
 {

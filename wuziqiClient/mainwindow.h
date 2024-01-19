@@ -1,10 +1,11 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include"Kernel/Kernel.h"
 #include"gamedialog.h"
 #include"gamelobbydialog.h"
+#include"logindialog.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,10 +18,10 @@ public:
     MainWindow(QString userId,QWidget *parent = 0);
     ~MainWindow();
 
-    GameDialog* m_pGameDialog;
-    Kernel* m_pKernel;
+    GameDialog* m_pGameDialog =nullptr;
+    Kernel* m_pKernel = nullptr;
     QString m_userId;
-    GameLobbyDialog* m_pGameLobby;
+    GameLobbyDialog* m_pGameLobby = nullptr;
     bool isOnlineRq;//客户端是否开启过网络游戏
 private slots:
 
@@ -29,6 +30,7 @@ private slots:
     void on_pb_pvp_clicked();
 
     void on_pb_pve_clicked();
+
 
 private:
     Ui::MainWindow *ui;

@@ -44,9 +44,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_pb_online_clicked()
 {
     if(isOnlineRq == false){
-        m_pGameLobby = new GameLobbyDialog(m_userId);
+        if(m_userId!=""){
+            m_pGameLobby = new GameLobbyDialog(m_userId);
+        }else{
+            m_pGameLobby = new GameLobbyDialog();
+        }
         m_pGameDialog = nullptr;
         m_pKernel = Kernel::getInstance();
+        this->hide();
         connect(m_pKernel,&Kernel::SIG_loginResult,m_pGameLobby,&GameLobbyDialog::LoginRsComing);
         connect(m_pKernel,&Kernel::SIG_FriendInfoComing,m_pGameLobby,&GameLobbyDialog::FriendInfoComing);
         connect(m_pKernel,&Kernel::SIG_FriendOnline,m_pGameLobby,&GameLobbyDialog::onFriendOnline);
@@ -54,12 +59,12 @@ void MainWindow::on_pb_online_clicked()
         connect(m_pKernel,&Kernel::SIG_loadExistRoomRs,m_pGameLobby,&GameLobbyDialog::loadExistRoomRsComing);
         connect(m_pKernel,&Kernel::SIG_roomIsBeClosed,m_pGameLobby,&GameLobbyDialog::roomBeCloseComing);
         connect(m_pGameLobby,&GameLobbyDialog::SIG_showMainWindow,this,&MainWindow::show);
-        m_pKernel->sendLoginRq(m_userId);
-        m_pKernel->loadExistRoomRq();
-        isOnlineRq = true;
+//        m_pKernel->sendLoginRq(m_userId);
+//        m_pKernel->loadExistRoomRq();
+//        isOnlineRq = true;
+//        m_pGameLobby->show();
+//        this->hide();
     }
-    m_pGameLobby->show();
-    this->hide();
 }
 
 

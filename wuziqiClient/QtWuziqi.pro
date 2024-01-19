@@ -54,3 +54,7 @@ FORMS += \
     mainwindow.ui \
     playerinfo.ui \
     startdialog.ui
+
+
+include(./LoginModel/LoginModel.pri)
+INCLUDEPATH +=./LoginModel

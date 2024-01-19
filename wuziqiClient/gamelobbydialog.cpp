@@ -10,6 +10,27 @@ GameLobbyDialog::GameLobbyDialog(QString userId,QWidget *parent) :
 {
     ui->setupUi(this);
     m_userId = userId;
+    init();
+
+}
+
+GameLobbyDialog::GameLobbyDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::GameLobbyDialog)
+{
+    ui->setupUi(this);
+    m_pLoginDialog = new LoginDialog();
+    m_pLoginDialog->show();
+    init();
+}
+
+GameLobbyDialog::~GameLobbyDialog()
+{
+    delete ui;
+}
+
+void GameLobbyDialog::init()
+{
     m_pKernel = Kernel::getInstance();
     m_vbLayout = new QVBoxLayout;
     m_vbLayout->setContentsMargins(0,0,0,0);
@@ -40,12 +61,13 @@ GameLobbyDialog::GameLobbyDialog(QString userId,QWidget *parent) :
 
     connect(m_pGameDialog,&GameDialog::SIG_playerChess,m_pKernel,&Kernel::dealPlayChess);
     connect(m_pGameDialog,&GameDialog::SIG_gameDialogClose,this,&GameLobbyDialog::show);
-    //connect(m_pKernel,&Kernel::SIG_gameClear,m_pGameDialog,);
+    connect(m_pLoginDialog,&LoginDialog::SIG_SignIn,this,&GameLobbyDialog::onLoginRq);
 }
 
-GameLobbyDialog::~GameLobbyDialog()
+void GameLobbyDialog::onLoginRq(QString userid, QString passwd)
 {
-    delete ui;
+    m_userId = userid;
+    m_pKernel->sendLoginRq(userid,passwd);
 }
 
 void GameLobbyDialog::LoginRsComing(int state, int iconId, QString userName, QString feeling)
@@ -68,6 +90,7 @@ void GameLobbyDialog::LoginRsComing(int state, int iconId, QString userName, QSt
         ui->pb_icon->setIcon(QIcon(iconPath));
         repaint();
         show();
+        m_pLoginDialog->close();
     }
 }
 
@@ -101,7 +124,7 @@ void GameLobbyDialog::onFriendOnline(QString friendId)
 {
     qDebug()<<"GameLobbyDialog::onFriendOnline";
     for(auto ite:m_listFriendItem){//在好友链表中查找好友对应的item
-        if(ite.first==friendId){
+        if(ite.first==friendId &&ite.first!=m_userId){
             ite.second->setOnline();
         }
     }
@@ -214,6 +237,7 @@ void GameLobbyDialog::on_pb_newRoom_clicked()
 void GameLobbyDialog::closeEvent(QCloseEvent *event)
 {
     Q_UNUSED(event);
+    m_pKernel->dealOfflineRq();
     emit SIG_showMainWindow();
 }
 
