@@ -46,7 +46,13 @@ public:
     string getUserIdUseSock(sock_fd sock);
 	sock_fd getSockUseUserId(string userId);
 	void dealClientOffLine(sock_fd sock, char* packet, int nlen);
+	//处理登录请求
 	void dealLoginRequest(sock_fd sock, char* packet, int nlen);
+	void dealLoginRequestUsePassword(sock_fd sock,char* packet,int nlen);
+	//处理注册请求
+	void dealRegisterRequest(sock_fd sock, char* packet, int nlen);
+
+
 	//处理获取好友列表请求
 	void dealFriendInfoRequest(sock_fd sock, char* packet, int nlen);//返回好友信息
 	//处理创建房间请求
@@ -78,5 +84,7 @@ private:
     CMysql * m_sql;
     Block_Epoll_Net * m_tcp;
 };
+
+
 
 #endif // CLOGIC_H
