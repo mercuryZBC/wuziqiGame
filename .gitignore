@@ -1,2 +1,2 @@
-./wuziqiServer/build
-./wuziqiClient/.qtc_clangd
+wuziqiServer/build
+wuziqiClient/.qtc_clangd
