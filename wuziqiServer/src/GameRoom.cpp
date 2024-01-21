@@ -4,6 +4,7 @@
 using namespace std;
 GameRoom::GameRoom(string userId,CLogic* pLogic)
 {
+	m_isStart = false;
 	srand(time(0));
 	m_isLock = false;
 	m_pLogic = pLogic;
@@ -18,6 +19,7 @@ GameRoom::GameRoom(string userId,CLogic* pLogic)
 
 GameRoom::~GameRoom()
 {
+	m_isStart = false;
 	/*if (m_timer) delete m_timer;
 	m_timer = nullptr;*/
 	m_timer->stop();
@@ -27,6 +29,7 @@ GameRoom::~GameRoom()
 
 void GameRoom::startGame()
 {
+	m_isStart = true;
 	m_gameMapVec.resize(15, vector<int>(kBoardSizeNum, 0));
 	blackSide = rand() % 2;//随机选的黑色方
 	curSide = blackSide;
@@ -36,7 +39,7 @@ void GameRoom::startGame()
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&gameStartPack, sizeof(gameStartPack));
 	gameStartPack.user1isBlack = curSide;
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&gameStartPack, sizeof(gameStartPack));
-	m_timer->start(100,std::bind(&GameRoom::setRemainTime,this));
+	//m_timer->start(100,std::bind(&GameRoom::setRemainTime,this));
 }
 
 void GameRoom::enterRoom(string userId)
@@ -101,13 +104,14 @@ void GameRoom::playerChess(STRU_PLAYER_CHESS playerChess)
 	curSide = !curSide;
 	bool win = isWin(playerChess.chessRow, playerChess.chessCol);
 	if (win) {
+		m_isStart =false;
 		STRU_GAME_OVER gameOver;
 		gameOver.winSide = playerChess.side;
 		m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&gameOver, sizeof(gameOver));
 		m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&gameOver, sizeof(gameOver));
-		m_timer->stop();
 		m_user1IsReady = false;
 		m_user2IsReady = false;
+		clearGame();
 	}
 }
 
@@ -176,29 +180,38 @@ void GameRoom::clearGame()
 	STRU_GAME_CLEAR game_clear;
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&game_clear, sizeof(game_clear));
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&game_clear, sizeof(game_clear));
+	for (int i=0; i<m_gameMapVec.size(); i++) {
+		for (int j=0; j<m_gameMapVec[i].size(); j++) {
+			m_gameMapVec[i][j] = 0;
+		}
+	}
+	
+	
 }
 
 void GameRoom::setRemainTime()
 {
 	//cout << "GameRoom::setRemainTime()" << endl;
-	if (curSide == 0) {
-		user1RemainTime--;
-		if (user1RemainTime % 10 == 0) {
-			STRU_SET_REMAIN_TIME setRemainTime;
-			setRemainTime.side = curSide;
-			setRemainTime.remainTime = user1RemainTime;
-			m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&setRemainTime, sizeof(setRemainTime));
-			m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&setRemainTime, sizeof(setRemainTime));
+	if (m_isStart) {
+		if (curSide == 0) {
+			user1RemainTime--;
+			if (user1RemainTime % 10 == 0) {
+				STRU_SET_REMAIN_TIME setRemainTime;
+				setRemainTime.side = curSide;
+				setRemainTime.remainTime = user1RemainTime;
+				m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&setRemainTime, sizeof(setRemainTime));
+				m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&setRemainTime, sizeof(setRemainTime));
+			}
 		}
-	}
-	else {
-		user2RemainTime--;
-		if (user2RemainTime % 10 == 0) {
-			STRU_SET_REMAIN_TIME setRemainTime;
-			setRemainTime.side = curSide;
-			setRemainTime.remainTime = user2RemainTime;
-			m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&setRemainTime, sizeof(setRemainTime));
-			m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&setRemainTime, sizeof(setRemainTime));
+		else {
+			user2RemainTime--;
+			if (user2RemainTime % 10 == 0) {
+				STRU_SET_REMAIN_TIME setRemainTime;
+				setRemainTime.side = curSide;
+				setRemainTime.remainTime = user2RemainTime;
+				m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&setRemainTime, sizeof(setRemainTime));
+				m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&setRemainTime, sizeof(setRemainTime));
+			}
 		}
 	}
 }

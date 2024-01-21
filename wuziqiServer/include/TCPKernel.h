@@ -4,7 +4,7 @@
 
 #include"block_epoll_net.h"
 #include "Mysql.h"
-
+#include "Timer.h"
 
 //类成员函数指针 , 用于定义协议映射表
 class TcpKernel;
@@ -46,7 +46,6 @@ private:
     Block_Epoll_Net * m_tcp;
     //协议映射表
     PFUN m_NetPackMap[_DEF_PACK_COUNT];
-
     CLogic* m_logic;
     friend class CLogic;
 };

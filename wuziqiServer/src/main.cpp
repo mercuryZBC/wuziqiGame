@@ -8,6 +8,7 @@ int main(int argc,char *argv[])
     {
         port = atoi(argv[1]);
     }
+    
     TcpKernel * pKernel =  TcpKernel::GetInstance();
     //开启服务 给定端口, 可以使用输入的port
     pKernel->Open( port );

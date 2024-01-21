@@ -315,8 +315,8 @@ void CLogic::dealCreateRoomRequest(sock_fd sock, char* packet, int nlen)
 	}
 	//m_pLockRoomVec->unlock();
 	//m_pLockRoomMap->lock();
-	if (!m_mapRoomNumToGameRoom.count(num)) {
-		m_mapRoomNumToGameRoom[num] = gameRoom;
+	if(!m_mapRoomNumToGameRoom.IsExist(num)){
+		m_mapRoomNumToGameRoom.insert(num, gameRoom);
 	}
 	//m_pLockRoomMap->unlock();
 	STRU_CREATE_ROOM_RS createRoomRs;
@@ -338,11 +338,10 @@ void CLogic::dealPlayerExitRoom(sock_fd sock, char* packet, int nlen)
 	cout << "Kernel::dealPlayerExitRoom" << endl;
 	int roomId = playerExitRoom.roomId;
 	string userId;
-	if (m_mapSOCKETtoUserId.IsExist(sock)) {
-		userId = m_mapSOCKETtoUserId[sock];
+	if (m_mapSOCKETtoUserId.IsExist(sock)) {//存储当前用户id
 		m_mapSOCKETtoUserId.find(sock, userId);
 	}
-	if (m_mapRoomNumToGameRoom.count(roomId)) {
+	if (m_mapRoomNumToGameRoom.IsExist(roomId)) {//判断房间id是否存在
 		GameRoom* gm = m_mapRoomNumToGameRoom[roomId];
 		int userCount=0;
 		if (gm->m_userIsExist1) {
@@ -362,7 +361,7 @@ void CLogic::dealPlayerExitRoom(sock_fd sock, char* packet, int nlen)
 		if (userCount == 1) {
 			delete gm;
 			gm = nullptr;
-			m_mapRoomNumToGameRoom.erase(m_mapRoomNumToGameRoom.find(roomId));
+			m_mapRoomNumToGameRoom.erase(roomId);
 			m_vecIsGameRoomExist[roomId] = 0;
 			STRU_ROOM_CLOSE roomClosePack;
 			roomClosePack.roomId = roomId;
@@ -405,7 +404,7 @@ void CLogic::playerExitRoom(string userId)
 			if (userCount == 1) {
 				delete gm;
 				gm = nullptr;
-				m_mapRoomNumToGameRoom.erase(m_mapRoomNumToGameRoom.find(i));
+				m_mapRoomNumToGameRoom.erase(i);
 				m_vecIsGameRoomExist[i] = false;
 				STRU_ROOM_CLOSE roomClosePack;
 				roomClosePack.roomId = i;
@@ -455,7 +454,7 @@ void CLogic::playerIsReady(sock_fd sock, char* packet, int nlen)
 	STRU_GAME_READY gameReadyPack = *(STRU_GAME_READY*)packet;
 	string userId = getUserIdUseSock(sock);
 	int roomId = gameReadyPack.roomId;
-	if (m_mapRoomNumToGameRoom.count(roomId)) {
+	if (m_mapRoomNumToGameRoom.IsExist(roomId)) {
 		GameRoom* gm = m_mapRoomNumToGameRoom[roomId];
 		gm->playerReady(userId);
 	}
@@ -464,7 +463,7 @@ void CLogic::playerIsReady(sock_fd sock, char* packet, int nlen)
 void CLogic::dealPlayerChess(sock_fd sock, char* packet, int nlen)
 {
 	STRU_PLAYER_CHESS playerChess = *(STRU_PLAYER_CHESS*)packet;
-	if (m_mapRoomNumToGameRoom.count(playerChess.roomId)) {
+	if (m_mapRoomNumToGameRoom.IsExist(playerChess.roomId)) {
 		m_mapRoomNumToGameRoom[playerChess.roomId]->playerChess(playerChess);
 	}
 }
@@ -509,8 +508,10 @@ void CLogic::sendRoomInfo(sock_fd sock)
 {
 	_DEF_COUT_FUNC_
 	STRU_LOAD_EXIST_ROOM_RS loadExistRoomRs;
-	for (auto ite : m_mapRoomNumToGameRoom) {
-		loadExistRoomRs = getRoomInfo(ite.first);
+	vector<pair<int, GameRoom*>>vec;
+	m_mapRoomNumToGameRoom.getAll(vec);
+	for (int i=0;i<vec.size();i++) {
+		loadExistRoomRs = getRoomInfo(vec[i].first);
 		m_pKernel->SendData(sock, (char*)&loadExistRoomRs, sizeof(loadExistRoomRs));
 	}
 }
@@ -610,6 +611,15 @@ STRU_LOAD_EXIST_ROOM_RS CLogic::getRoomInfo(int roomId)
 		loadExistRoomRs.user2IconId = getIconId(gm.m_userId2);
 	}
 	return loadExistRoomRs;
+}
+
+void CLogic::timeout()
+{
+	vector<pair<int, GameRoom*>>vec;
+	m_mapRoomNumToGameRoom.getAll(vec);
+	for (int i=0; i<vec.size(); i++) {
+		vec[i].second->setRemainTime();
+	}
 }
 
 

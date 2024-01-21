@@ -84,11 +84,13 @@ public:
         return flag;
     }
     bool getAll(vector<pair<K, V>>& vec){
+        pthread_mutex_lock(&m_lock);
         auto ite = m_map.begin();
         while(ite != m_map.end()){
             vec.push_back(*ite);
             ite++;
         }
+        pthread_mutex_unlock(&m_lock);
         return true;
     }
 
@@ -207,7 +209,9 @@ private:
     struct epoll_event events[MAX_EVENTS+1];
     //线程池相关
     thread_pool *m_threadpool;
+    static void sighander(int signo){
 
+    }
 
 };
 

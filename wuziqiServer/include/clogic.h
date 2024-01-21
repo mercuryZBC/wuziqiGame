@@ -3,9 +3,11 @@
 
 #include"TCPKernel.h"
 #include "block_epoll_net.h"
+#include <functional>
 #include <sys/socket.h>
 #include <mutex>
 #include "GameRoom.h"
+#include "Timer.h"
 struct SERVER_FILE_INFO {
 	int fileSize;
 	char sendUserId[12];
@@ -22,14 +24,20 @@ public:
         m_pKernel = pkernel;
         m_sql = pkernel->m_sql;
         m_tcp = pkernel->m_tcp;
+		m_timer = new Timer();
+		m_timer->start(100,std::bind(&CLogic::timeout,this));
     }
+	~CLogic(){
+		if (m_timer) {
+			delete m_timer;	
+		}
+		m_timer = nullptr;
+	}
 private:
-	mutex* m_pLockRoomVec;
-	mutex* m_pLockRoomMap;
+	
 public:
-    list<pair<sock_fd, string>>m_listUserOnlineSocketAnduserId;//保存socket和userId;
     vector<bool>m_vecIsGameRoomExist;//存放房间号是否被占用
-    map<int,GameRoom*>m_mapRoomNumToGameRoom;
+    MyMap<int,GameRoom*>m_mapRoomNumToGameRoom;
     //设置协议映射
     void setNetPackMap();
 
@@ -79,10 +87,13 @@ public:
 	STRU_FRIENDINFO_RS getFriendInfo(string friendId);
 	STRU_LOAD_EXIST_ROOM_RS getRoomInfo(int roomId);//获取用户信息
 public:
+	void timeout();
+public:
 	TcpKernel* m_pKernel;
 private:
     CMysql * m_sql;
     Block_Epoll_Net * m_tcp;
+	Timer* m_timer;
 };
 
 
