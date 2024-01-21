@@ -693,13 +693,7 @@ void GameDialog::onlineGameStart(STRU_GAME_STRAT gameStartPack)
         playerFlag = gameStartPack.user1isBlack;
     }
     if(playerFlag == true) gameStatus = PLAYING;
-    for (int i = 0; i < kBoardSizeNum; i++)
-    {
-        std::vector<int> lineBoard;
-        for (int j = 0; j < kBoardSizeNum; j++)
-            lineBoard.push_back(0);
-        gameMapVec.push_back(lineBoard);
-    }
+    gameclear();
     onlineGameStartFlag = true;
 }
 
@@ -728,9 +722,18 @@ void GameDialog::gameOverComing(bool winSide)
     }
     qDebug()<<"GameDialog::gameOverComing";
     ui->pb_startGame->show();
+    gameclear();
+
 }
 
 void GameDialog::gameclear()
 {
-
+    gameMapVec.clear();
+    for (int i = 0; i < kBoardSizeNum; i++)
+    {
+        std::vector<int> lineBoard;
+        for (int j = 0; j < kBoardSizeNum; j++)
+            lineBoard.push_back(0);
+        gameMapVec.push_back(lineBoard);
+    }
 }

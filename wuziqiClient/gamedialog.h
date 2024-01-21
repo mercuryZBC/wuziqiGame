@@ -68,7 +68,7 @@ public slots:
     void onlineGameStart(STRU_GAME_STRAT gameStartPack);
 
     void opponentChessComing(STRU_PLAYER_CHESS palyerChess);
-    void gameOverComing(bool winSide);
+    void gameOverComing(bool winSide);//游戏结束
     void gameclear();
 private:
     Ui::GameDialog *ui;
