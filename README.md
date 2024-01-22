@@ -8,6 +8,20 @@ wiziqiGame是一款基于tcp的在线五子棋游戏，可以实现玩家对战�
 
 C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
+### UML类图分析
+
+#### 1. 网络接口类
+
+![image-20240122114302035](https://s2.loli.net/2024/01/22/TXR8uUsEjOPKCGr.png)
+
+2. 逻辑处理类Kernel
+
+   ![image-20240122114451584.png](https://s2.loli.net/2024/01/22/79cz2xvLIb4YoUa.png)
+
+3. 界面处理类
+
+   
+
 ## 功能截图
 
 ![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
