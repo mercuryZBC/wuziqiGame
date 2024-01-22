@@ -12,15 +12,13 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
 #### 1. 网络接口类
 
-![image-20240122114302035](https://s2.loli.net/2024/01/22/TXR8uUsEjOPKCGr.png)
+![image.png](https://cdn.nlark.com/yuque/0/2024/png/42406148/1705895737385-4cc2796a-6864-40be-ba71-824b9290a1ac.png#averageHue=%231b1720&clientId=uc1437574-ac05-4&from=paste&height=799&id=uedd9b72b&originHeight=1199&originWidth=1646&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=199835&status=done&style=none&taskId=u441ff0d7-3186-4f9e-9c1f-e705a387bfa&title=&width=1097.3333333333333)
 
 2. 逻辑处理类Kernel
 
-   ![image-20240122114451584.png](https://s2.loli.net/2024/01/22/79cz2xvLIb4YoUa.png)
+   ![image.png](https://cdn.nlark.com/yuque/0/2024/png/42406148/1705895764607-adcd9e01-edd5-4384-9902-07b04ea7dd8b.png#averageHue=%231b1822&clientId=uc1437574-ac05-4&from=paste&height=638&id=u89d58525&originHeight=957&originWidth=1052&originalType=binary&ratio=1.5&rotation=0&showTitle=false&size=237222&status=done&style=none&taskId=ue9c26056-0432-421c-8fae-87350997f7f&title=&width=701.3333333333334)
 
-3. 界面处理类
-
-   
+    3.图形界面类
 
 ## 功能截图
 
