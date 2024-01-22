@@ -1,4 +1,4 @@
-#ifndef CHESSBOARDWIDGET_H
+﻿#ifndef CHESSBOARDWIDGET_H
 #define CHESSBOARDWIDGET_H
 
 #include <QWidget>
@@ -15,10 +15,8 @@ class ChessboardWidget : public QWidget
 public:
     explicit ChessboardWidget(GameDialog* game,QWidget *parent = nullptr);
     ~ChessboardWidget();
-private:
-    GameDialog* m_pGameDialog;
-    bool isStart;
-    int clickPosRow, clickPosCol; // 存储将点击的位置
+    void initPVPGame();
+    void initPVEGame();
 protected:
     // 绘制
     void paintEvent(QPaintEvent *event);
@@ -29,10 +27,11 @@ protected:
 private slots:
     void chessOneByPerson();
     void chessOneByAI();
-public:
-    void initPVPGame();
-    void initPVEGame();
 private:
+    GameDialog* m_pGameDialog;
+    bool isStart;
+    int clickPosRow, clickPosCol; // 存储将点击的位置
+
     Ui::ChessboardWidget *ui;
 };
 

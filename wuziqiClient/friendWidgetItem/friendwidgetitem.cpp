@@ -90,17 +90,6 @@ void friendWidgetItem::setOnline()
         repaint();
 }
 
-void friendWidgetItem::chatDataCome(QString chatData)
-{
-    qDebug()<<"friendWidgetItem::chatDataCome";
-        //m_pChatDialog->setChatText(chatData);
-}
-
-void friendWidgetItem::friendsFileComing(CLIENT_FILE_INFO clientFileInfo)
-{
-        qDebug()<<"friendWidgetItem::friendsFileComing";
-        //m_pChatDialog->friendFileComing(clientFileInfo);
-}
 
 QString friendWidgetItem::getName()
 {
@@ -115,17 +104,4 @@ int friendWidgetItem::getIconId()
 void friendWidgetItem::on_pb_icon_clicked()
 {
     //m_pChatDialog->show();
-}
-
-void friendWidgetItem::onSendChatMsg(QString chatData)
-{
-    qDebug()<<"friendWidgetItem::onSendChatMsg";
-    STRU_CHAT_RQ chatRqPack;
-    memset(chatRqPack.chatDate,0,sizeof(chatRqPack.chatDate));
-    memset(chatRqPack.friendId,0,sizeof(chatRqPack.friendId));
-    int nLen=id.length();
-    strncpy(chatRqPack.friendId,id.toStdString().c_str(),nLen);//将文本消息放入包中
-    strcpy_s(chatRqPack.chatDate,chatData.toStdString().c_str());//将好友id放入包中
-    emit SIG_itemSendChatMeg(chatRqPack);
-
 }

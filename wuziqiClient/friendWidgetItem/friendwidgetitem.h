@@ -1,4 +1,4 @@
-#ifndef FRIENDWIDGETITEM_H
+﻿#ifndef FRIENDWIDGETITEM_H
 #define FRIENDWIDGETITEM_H
 
 #include <QWidget>
@@ -20,16 +20,9 @@ private:
     int iconId;
     QString feeling;
 public:
-    //ChatDialog* m_pChatDialog;
-
-public:
     explicit friendWidgetItem(CLIENT_FRIEND_INFO struFriendInfo,QWidget *parent = nullptr);
-    //explicit friendWidgetItem(int state,QString id,QString name,int iconId,QString feeling,QWidget *parent = nullptr);
     ~friendWidgetItem();
-    //好友设置为在线
-    void setOnline();
-    void chatDataCome(QString chatData);
-    void friendsFileComing(CLIENT_FILE_INFO clientFileInfo);
+    void setOnline();//设置好友为在线
     QString getName();
     int getIconId();
 signals:
@@ -39,8 +32,6 @@ signals:
     void SIG_itemRecvFileRequest(CLIENT_FILE_INFO);
 private slots:
     void on_pb_icon_clicked();
-public:
-    void onSendChatMsg(QString chatData);
 private:
     Ui::friendWidgetItem *ui;
 };
