@@ -2,7 +2,31 @@
 
 ## 介绍
 
-wiziqiGame是一款基于tcp的在线五子棋游戏，可以实现玩家对战，人机对战，在线对战。
+该项目是一款在线棋牌对战平台，已实现用户登录、注册、游戏下载、游戏删除。内置在线五子棋游戏，并实现创建房间，加入房间，快速匹配，好友对战，掉线重连，人机对战等功能。
+
+## 功能截图
+
+游戏下载
+
+![下载游戏.png](https://s2.loli.net/2024/02/21/84aqhC3JHi5UPfo.png)
+
+启动游戏
+
+![打开游戏.png](https://s2.loli.net/2024/02/21/7f8t4r3zo5Zw6eV.png)****
+
+![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
+
+在线游戏大厅界面
+
+![image-20240113140156963](https://s2.loli.net/2024/01/13/x5aCuDthslHbyWq.png)
+
+对局准备界面
+
+![image-20240113140230264](https://s2.loli.net/2024/01/13/mcUGhMvRbfgpC7q.png)
+
+对局结束界面
+
+![image-20240113140319320](https://s2.loli.net/2024/01/13/onGpsuwBd2NDTv5.png)
 
 ## 软件架构
 
@@ -20,29 +44,7 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
     3.图形界面类
 
-## 功能截图
 
-游戏下载
-
-![image.png](https://cdn.nlark.com/yuque/0/2024/png/42406148/1708484898055-85d197df-b1b8-4854-82f1-a7d143ab2134.png?x-oss-process=image%2Fresize%2Cw_1125%2Climit_0)
-
-启动游戏
-
-![img](https://cdn.nlark.com/yuque/0/2024/png/42406148/1708485019440-a1121d24-ece6-4a65-9a60-f18a88902339.png)
-
-![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
-
-在线游戏大厅界面
-
-![image-20240113140156963](https://s2.loli.net/2024/01/13/x5aCuDthslHbyWq.png)
-
-对局准备界面
-
-![image-20240113140230264](https://s2.loli.net/2024/01/13/mcUGhMvRbfgpC7q.png)
-
-对局结束界面
-
-![image-20240113140319320](https://s2.loli.net/2024/01/13/onGpsuwBd2NDTv5.png)
 
 ## 服务端讲解
 
