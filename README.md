@@ -22,6 +22,14 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
 ## 功能截图
 
+游戏下载
+
+![image.png](https://cdn.nlark.com/yuque/0/2024/png/42406148/1708484898055-85d197df-b1b8-4854-82f1-a7d143ab2134.png?x-oss-process=image%2Fresize%2Cw_1125%2Climit_0)
+
+启动游戏
+
+![img](https://cdn.nlark.com/yuque/0/2024/png/42406148/1708485019440-a1121d24-ece6-4a65-9a60-f18a88902339.png)
+
 ![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
 
 在线游戏大厅界面
