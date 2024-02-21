@@ -8,11 +8,11 @@
 
 游戏下载
 
-![下载游戏.png](https://s2.loli.net/2024/02/21/84aqhC3JHi5UPfo.png)
+![image-202401131346](https://s2.loli.net/2024/02/21/84aqhC3JHi5UPfo.png)
 
 启动游戏
 
-![打开游戏.png](https://s2.loli.net/2024/02/21/7f8t4r3zo5Zw6eV.png)****
+![image-2024011313461](https://s2.loli.net/2024/02/21/7f8t4r3zo5Zw6eV.png)
 
 ![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
 
