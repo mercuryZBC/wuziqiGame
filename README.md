@@ -7,11 +7,11 @@
 ## 功能截图
 
 游戏下载
-![](https://s2.loli.net/2024/02/21/84aqhC3JHi5UPfo.png)
+![OyU8fF.png](https://ooo.0x0.ooo/2024/02/21/OyU8fF.png)
 
 启动游戏
 
-![](https://s2.loli.net/2024/02/21/7f8t4r3zo5Zw6eV.png)
+![OyU6pD.png](https://ooo.0x0.ooo/2024/02/21/OyU6pD.png)
 
 ![image-20240113134650576](https://s2.loli.net/2024/01/13/6xXhBCUjMrIJgy2.png)
 
