@@ -7,7 +7,6 @@
 ## 功能截图
 
 游戏下载
-
 ![](https://s2.loli.net/2024/02/21/84aqhC3JHi5UPfo.png)
 
 启动游戏
