@@ -45,9 +45,15 @@ C/S架构，客户端采用qt开发GUI界面，服务端在linux平台开发
 
 
 
-## 服务端讲解
+## 服务端结构
 
-### 1. epoll事件监听
+服务器采用基于epoll监听的Reactor模式处理客户端请求
+
+Reactor主要由Reactor 线程`、`Handlers 处理器组成，Reactor线程负责监听客户端请求，通过执行epoll_wait判断客户端事件是否到达，如果有事件到达，将该事件绑定到一个Handler处理器，则将该任务放入事件队列，线程池的工作者线程从任务队列中获取线程。
+
+![image-20240222231008222](https://s2.loli.net/2024/02/22/7GYrmIlBQf2XeZh.png)
+
+### 1. Reactor 线程
 
 ~~~cpp
 //事件监听循环代码
@@ -67,15 +73,67 @@ void Block_Epoll_Net::EventLoop()
             int fd = ev->fd;
             if ( (events[i].events & EPOLLIN) ) {
                 if( fd == m_listenfd )
-                    accept_event();
+                    accept_event();//accept事件
                 else
-                    recv_event( ev );
+                    recv_event( ev );//客户端业务事件
             }
             if ((events[i].events & EPOLLOUT) ) {
                 epollout_event( ev );
             }
         }
     }
+}
+~~~
+
+### 2.消费者线程
+
+消费者线程进行任务处理
+
+~~~cpp
+/* 工作线程函数 消费者*/
+void * thread_pool::Custom(void * arg)
+{
+	// 获取线程池对象指针
+    pool_t * p = (pool_t*)arg;
+    task_t task;
+    while(p->thread_shutdown)  // 线程池未关闭
+    {
+        pthread_mutex_lock(&p->lock);// 上锁
+		// 当前任务队列中没有任务，且线程池未关闭
+        while(p->queue_cur == 0 && p->thread_shutdown  )
+        {
+			// 等待有新的任务被添加到队列中
+            pthread_cond_wait(&p->not_empty,&p->lock);
+        }
+		// 线程池已关闭
+        if(!p->thread_shutdown  )
+        {
+            pthread_mutex_unlock(&p->lock);
+            pthread_exit(NULL); // 结束此线程
+        }
+		// 需要等待关闭的线程数大于零，且当前存活的线程数大于最小线程数
+        if(p->thread_wait > 0 && p->thread_alive > p->thread_min)
+        {
+            --(p->thread_wait); // 等待关闭的线程数减一
+            --(p->thread_alive);// 存活的线程数减一
+            pthread_mutex_unlock(&p->lock);// 解锁
+            pthread_exit(NULL);// 结束此线程
+        }
+		// 取出任务
+        task.task = p->queue_task[p->queue_rear].task;
+        task.arg = p->queue_task[p->queue_rear].arg;
+        p->queue_rear = (p->queue_rear + 1) % p->queue_max;// 更新队列尾指针
+        --(p->queue_cur);// 当前任务队列中的任务数减一
+        pthread_cond_signal(&p->not_full); // 通知生产者线程有新的任务可供添加
+        ++(p->thread_busy);// 忙碌的线程数加一
+        pthread_mutex_unlock(&p->lock);// 解锁
+        //执行核心工作
+        (*task.task)(task.arg);
+        pthread_mutex_lock(&p->lock);// 上锁
+        --(p->thread_busy);// 忙碌的线程数减一
+        pthread_mutex_unlock(&p->lock); // 解锁
+    }
+    return 0;
 }
 ~~~
 
