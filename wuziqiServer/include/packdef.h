@@ -119,6 +119,7 @@ typedef int MSG_TYPE;
 #define _DEF_TCP_PROTO_KEEP_ALIVE (_DEF_TCP_PROTO_BASE+49)//心跳包
 #define _DEF_TCP_PROTO_OFFLINE_RQ (_DEF_TCP_PROTO_BASE+50)//下线
 
+#define _DEF_TCP_PROTO_QPS_TEST_RQ (_DEF_TCP_PROTO_BASE+55)
 
 
 struct STRU_LOGIN_RQ {//登录请求
@@ -237,6 +238,12 @@ struct STRU_ONLINE_NOTICE {
 
 struct STRU_OFFLINE_NOTICE {
     STRU_OFFLINE_NOTICE() :type(_DEF_TCP_PROTO_OFFLINE_NOTICE) {}
+    MSG_TYPE type;
+    char userId[12];
+};
+
+struct STRU_QPS_TEST{
+    STRU_QPS_TEST():type(_DEF_TCP_PROTO_QPS_TEST_RQ){}
     MSG_TYPE type;
     char userId[12];
 };

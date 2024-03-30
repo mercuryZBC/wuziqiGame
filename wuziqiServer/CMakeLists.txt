@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 
 # Enable C++11
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 # file(GLOB SOURCES *.cpp)
 aux_source_directory(src SOURCES)
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -14,4 +14,4 @@ set(mysqlclient /usr/local/mysql/lib/mysqlclient)
 target_link_libraries(${PROJECT_NAME} mysqlclient) 
 
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lredis++ -lhiredis -pthread")

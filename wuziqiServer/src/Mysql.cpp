@@ -53,6 +53,19 @@ int CMysql::UpdateMySql(char *szsql)
     return TRUE;   // SQL执行成功，返回TRUE
 }
 
+void CMysql::getAllUserData(){
+    string sql = "select userId,passwd,userName,iconId,feeling from userinfo;";
+	cout << sql << endl;
+	list<string>selectRes;
+    int iResult = SelectMySql((char*)sql.c_str(), 4, selectRes);
+	if (!iResult) {
+		cout << "CMysql::getAllUserData() select Failed" << endl;
+		exit(0);
+	}else{
+        
+    }
+}
+
 void CMysql::DisConnect()
 {
     mysql_close(conn);  // 关闭数据库连接

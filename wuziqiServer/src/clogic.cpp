@@ -4,14 +4,19 @@
 #include <cstring>
 #include <fstream>
 #include <istream>
+#include <optional>
 #include <string>
 #include <strings.h>
+#include <sw/redis++/utils.h>
 #include <unistd.h>
 #include <utility>
 #include <vector>
 #include <dirent.h>
 #include "GameRoom.h"
 #define _DEF_COUT_FUNC_    cout << "clientfd: "<< sock <<" "<< __func__ << endl;
+
+
+
 vector<string> split(const string str, const string& delim = " ") {
 	vector<string> res;
 	if ("" == str) return res;
@@ -32,6 +37,19 @@ vector<string> split(const string str, const string& delim = " ") {
 	return res;
 }
 
+CLogic::CLogic( TcpKernel* pkernel )
+{
+	m_pKernel = pkernel;
+	m_sql = pkernel->m_sql;
+	m_redis = pkernel->m_redis;
+	m_dataModel = new dataModel(m_sql,m_redis);
+	m_dataModel->loadUserInfo();//将基本数据装载到redis中
+	m_dataModel->loadFriendId();
+	m_dataModel->loadWuziqiScore();
+	m_tcp = pkernel->m_tcp;
+	m_timer = new Timer();
+	m_timer->start(100,std::bind(&CLogic::timeout,this));
+}
 
 void CLogic::setNetPackMap()
 {
@@ -46,6 +64,7 @@ void CLogic::setNetPackMap()
 	NetPackMap(_DEF_TCP_PROTO_LOAD_EXIST_ROOM_RQ) = &CLogic::dealLoadExistRoomRequest;
 	NetPackMap(_DEF_TCP_PROTO_LOGIN_RQ_USEPASSWD) = &CLogic::dealLoginRequestUsePassword;
 	NetPackMap(_DEF_TCP_PROTO_REGISTER_RQ) = &CLogic::dealRegisterRequest;
+	NetPackMap(_DEF_TCP_PROTO_QPS_TEST_RQ) = &CLogic::dealQpsTest;
 }
 
 string CLogic::getUserIdUseSock(sock_fd sock)
@@ -80,12 +99,81 @@ void CLogic::dealClientOffLine(sock_fd sock, char* packet, int nlen)
 	if(m_mapUserIdtoSOCKET.IsExist(userId)) m_mapUserIdtoSOCKET.erase(userId);
 }
 
-void CLogic::dealLoginRequest(sock_fd sock, char* packet, int nlen)
+void CLogic::dealLoginRequest(sock_fd sock, char* packet, int nlen){
+	_DEF_COUT_FUNC_
+	STRU_LOGIN_RS loginRsPack;
+	memset(loginRsPack.userName, 0, sizeof(loginRsPack.userName));
+	memset(loginRsPack.feeling, 0, sizeof(loginRsPack.feeling));
+	loginRsPack.type = _DEF_TCP_PROTO_LOGIN_RS;
+
+
+	STRU_LOGIN_RQ_USEPASSWD loginPacket = *(STRU_LOGIN_RQ_USEPASSWD*)packet;
+	string userId = loginPacket.userId;
+	optional<string> userinfo = m_dataModel->getUserInfo(userId);
+	if(userinfo == nullopt){
+		cout << "dealLoginRequest::use not exit" << endl;
+		loginRsPack.state = userIdOrpasswdError;
+	}
+	else{
+		cout<<*userinfo<<endl;
+		vector<string> infoVec = split(*userinfo,":");
+		string inputPass = loginPacket.passwd;
+		if(infoVec[3] != inputPass){
+			cout << "dealLoginRequest::passwd error" << endl;
+			loginRsPack.state = userIdOrpasswdError;
+		}else{
+			bool isOnline = 0;
+			if (m_mapUserIdtoSOCKET.IsExist(userId)) {
+				STRU_KEEP_ALIVE keepAlive;
+				int curSock;
+				m_mapUserIdtoSOCKET.find(userId, curSock);
+				if(curSock == sock){
+					isOnline = 0;
+				}
+				else{
+					m_pKernel->SendData(curSock, (char*)&keepAlive, sizeof(keepAlive));
+					int res =m_pKernel->SendData(curSock, (char*)&keepAlive, sizeof(keepAlive));
+					if(res < 0 ){
+						isOnline = 0;
+						dealClientOffLine(curSock, nullptr, 0);
+					}else{
+						loginRsPack.state = userIsOnline;
+						isOnline = 1;
+					}
+				}
+			}
+			if (isOnline == 0) {
+				loginRsPack.state = LoginSuccess;
+				//将sock和userid对存入list
+				m_mapSOCKETtoUserId.insert(sock, userId);
+				m_mapUserIdtoSOCKET.insert(userId, sock);
+				//存入用户名
+				string userName = infoVec[0];
+				int nLen = userName.length();
+				strncpy(loginRsPack.userName, userName.c_str(), nLen);
+				cout<<loginRsPack.userName<<endl;
+				//存入头像id
+				loginRsPack.iconId = atoi(infoVec[1].c_str());
+				cout << "dealLoginRequest::success" << endl;
+
+				//存入个人简介
+				string feeling = infoVec[2];
+				nLen = feeling.length();
+				strncpy(loginRsPack.feeling, feeling.c_str(), nLen);
+				//向其他已在线好友发送上线通知
+				sendOnlineInfo(loginPacket.userId);
+			}
+		}
+	}
+	m_pKernel->SendData(sock, (char*)&loginRsPack, sizeof(loginRsPack));//返回登录请求结果
+}
+
+void CLogic::dealLoginRequestUsePassword(sock_fd sock, char* packet, int nlen)
 {
 	_DEF_COUT_FUNC_
 	STRU_LOGIN_RQ loginPacket = *(STRU_LOGIN_RQ*)packet;
 	string userId = loginPacket.userId;
-	string sql = "select passwd,userName,iconId,feeling from UserInfo where userId = \"" + userId + "\";";
+	string sql = "select passwd,userName,iconId,feeling from userinfo where userId = \"" + userId + "\";";
 	cout << sql << endl;
 	list<string>selectRes;
 	int iResult = m_sql->SelectMySql((char*)sql.c_str(), 4, selectRes);
@@ -153,117 +241,35 @@ void CLogic::dealLoginRequest(sock_fd sock, char* packet, int nlen)
 
 	m_pKernel->SendData(sock, (char*)&loginRsPack, sizeof(loginRsPack));//返回登录请求结果
 }
-void CLogic::dealLoginRequestUsePassword(sock_fd sock,char* packet,int nlen)
-{
-	_DEF_COUT_FUNC_
-	STRU_LOGIN_RQ_USEPASSWD loginPacket = *(STRU_LOGIN_RQ_USEPASSWD*)packet;
-	string userId = loginPacket.userId;
-	string passwd = loginPacket.passwd;
-	string sql =   "select passwd,userName,iconId,feeling from UserInfo where userId = \"" + userId + "\";";
-	cout << sql << endl;
-	list<string>selectRes;
-	int iResult=m_sql->SelectMySql((char*)sql.c_str(), 4, selectRes);
-	if (!iResult) {
-		cout << "select Failed" << endl;
-		exit(0);
-	}
-	
-	auto ite = selectRes.begin();
-
-	STRU_LOGIN_RS loginRsPack;
-	memset(loginRsPack.userName, 0, sizeof(loginRsPack.userName));
-	memset(loginRsPack.feeling, 0, sizeof(loginRsPack.feeling));
-	loginRsPack.type = _DEF_TCP_PROTO_LOGIN_RS;
-
-	if (selectRes.size()<4) {
-
-		cout << "dealLoginRequest::use not exit" << endl;
-		loginRsPack.state = userIdOrpasswdError;
-
-	}
-	//判断客户端提供的密码是否正确
-	else if ( *(ite++) != passwd) {
-		cout << "dealLoginRequest::passwd error" << endl;
-		loginRsPack.state = userIdOrpasswdError;
-	}
-	else {
-		bool isOnline = 0;
-		if (m_mapUserIdtoSOCKET.IsExist(userId)) {
-			STRU_KEEP_ALIVE keepAlive;
-			int curSock;
-			m_mapUserIdtoSOCKET.find(userId, curSock);
-			if(curSock == sock){
-				isOnline = 0;
-			}
-			else{
-				m_pKernel->SendData(curSock, (char*)&keepAlive, sizeof(keepAlive));
-				int res =m_pKernel->SendData(curSock, (char*)&keepAlive, sizeof(keepAlive));
-				if(res < 0 ){
-					isOnline = 0;
-					dealClientOffLine(curSock, nullptr, 0);
-				}else{
-					loginRsPack.state = userIsOnline;
-					isOnline = 1;
-				}
-			}
-		}
-		if (isOnline == 0) {
-			loginRsPack.state = LoginSuccess;
-			//将sock和userid对存入list
-			m_mapSOCKETtoUserId.insert(sock, userId);
-			m_mapUserIdtoSOCKET.insert(userId, sock);
-			//存入用户名
-			string userName = *(ite++);
-			int nLen = userName.length();
-			strncpy(loginRsPack.userName, userName.c_str(), nLen);
-			cout<<loginRsPack.userName<<endl;
-			//存入头像id
-			loginRsPack.iconId = atoi((*ite++).c_str());
-			cout << "dealLoginRequest::success" << endl;
-
-			//存入个人简介
-			string feeling = *(ite);
-			nLen = feeling.length();
-			strncpy(loginRsPack.feeling, feeling.c_str(), nLen);
-			//向其他已在线好友发送上线通知
-			sendOnlineInfo(loginPacket.userId);
-		}
-	}
-	m_pKernel->SendData(sock,(char*)&loginRsPack,sizeof(loginRsPack));//返回登录请求结果
-}
 
 void CLogic::dealRegisterRequest(sock_fd sock, char* packet, int nlen)
 {
-	 _DEF_COUT_FUNC_
+	_DEF_COUT_FUNC_
     STRU_REGISTER_RQ registerRqPack=*(STRU_REGISTER_RQ*)packet;
-	string id = registerRqPack.RegisterId;
-	string sql = "select userId from UserInfo where userId = \"" + id + "\";";
-	cout << sql << endl;
-	list<string>selectRes;
-	int iResult = m_sql->SelectMySql((char*)sql.c_str(), 1, selectRes);
-	if (!iResult) {
-		cout << "select Failed" << endl;
-		exit(0);
-	}
-
 	STRU_REGISTER_RS registerRsPack;
-	if (selectRes.size() != 0) {
+	bool isExist = m_dataModel->userIsExist(registerRqPack.RegisterId);
+	if (isExist) {
 		registerRsPack.registerState = userIsExist;
 	}
 	else {
-		string id = registerRqPack.RegisterId;
-		string name = registerRqPack.RegisterName;
-		string passwd = registerRqPack.RegisterPasswd;
-		sql = "insert into userinfo(userId, userName, passwd) values(\"" + id + "\",\"" + name + "\",\"" + passwd + "\" ); ";
-		cout << sql << endl;
-		if (m_sql->UpdateMySql((char*)(sql.c_str()))) {
+		bool success = m_dataModel->newRegister(registerRqPack.RegisterId,registerRqPack.RegisterName,
+		registerRqPack.RegisterPasswd);
+		if(success){
 			registerRsPack.registerState = registerSuccess;
-		}
-		else {
+		}else{
 			registerRsPack.registerState = serverException;
 		}
 	}
 	m_pKernel->SendData(sock, (char*)&registerRsPack, sizeof(registerRsPack));
+}
+
+void CLogic::dealGetScoreRankRequest(sock_fd sock,char* packet,int nlen){
+
+	return;
+}
+void CLogic::dealMatchRequest(sock_fd sock,char* packet,int nlen){
+
+	return;
 }
 
 void CLogic::dealFriendInfoRequest(sock_fd sock, char* packet, int nlen)
@@ -275,22 +281,24 @@ void CLogic::dealFriendInfoRequest(sock_fd sock, char* packet, int nlen)
 	}else{
 		return;
 	}
-	string sql = +"select friendId from friend where userId = \"" + strUserId + "\";";
-	cout << sql << endl;
-	list<string>selectRes;
-	int iResult = m_sql->SelectMySql((char*)sql.c_str(), 1, selectRes);
-	if (!iResult) {
-		cout << "select Failed" << endl;
-		exit(0);
-	}
-
-
-	auto ite = selectRes.begin();
-	while (ite != selectRes.end()) {
-		cout << "returnFriendInfo FriendId:" << *ite << endl;
-		STRU_FRIENDINFO_RS friendInfo=getFriendInfo(*ite);
-		m_pKernel->SendData(sock, (char*)&friendInfo, sizeof(friendInfo));
-		ite++;
+	vector<string>friendIds = m_dataModel->getFriendIds(strUserId);
+	for(int i=0;i<friendIds.size();i++){
+		std::optional<string> friendInfo = m_dataModel->getUserInfo(friendIds[i]);
+		if (friendInfo!=nullopt) {
+			vector<string>info = split(*friendInfo,":");
+			STRU_FRIENDINFO_RS friendInfo;
+			bzero(&friendInfo, sizeof(friendInfo));
+			friendInfo.type = _DEF_TCP_PROTO_FRIENDINFO_RS;
+			strncpy(friendInfo.userId,friendIds[i].c_str(),friendIds[i].length());
+			strncpy(friendInfo.userName,info[0].c_str(),info[0].length());
+			strncpy(friendInfo.feeling,info[2].c_str(),info[2].length());
+			friendInfo.iconId = atoi(info[1].c_str());
+			friendInfo.state = offline;
+			if (m_mapUserIdtoSOCKET.IsExist(friendIds[i])) {
+				friendInfo.state = online;
+			}
+			m_pKernel->SendData(sock, (char*)&friendInfo, sizeof(friendInfo));
+		}
 	}
 	sendOnlineInfo((char*)strUserId.c_str());
 }
@@ -468,6 +476,11 @@ void CLogic::dealPlayerChess(sock_fd sock, char* packet, int nlen)
 	}
 }
 
+void CLogic::dealQpsTest(sock_fd sock,char* packet,int nlen){
+	//cout<<"CLogic::dealQpsTest(sock_fd sock,char* packet,int nlen)"<<endl;
+	m_pKernel->SendData(sock, "0",1);
+}
+
 void CLogic::sendOnlineInfo(char* userId)
 {
 	string strUserId = userId;
@@ -544,7 +557,7 @@ int CLogic::getIconId(string userId)
 STRU_FRIENDINFO_RS CLogic::getFriendInfo(string friendId)
 {
 	cout<<"CLogic::getFriendInfo"<<endl;
-	string sql = +"select userId,userName,iconId,feeling from UserInfo where userId = \"" + friendId + "\";";
+	string sql = +"select userId,userName,iconId,feeling from userinfo where userId = \"" + friendId + "\";";
 	STRU_FRIENDINFO_RS friendInfo;
 	cout << sql << endl;
 	memset(friendInfo.userId, 0, sizeof(friendInfo.userId));
@@ -596,6 +609,8 @@ STRU_FRIENDINFO_RS CLogic::getFriendInfo(string friendId)
 STRU_LOAD_EXIST_ROOM_RS CLogic::getRoomInfo(int roomId)
 {
 	STRU_LOAD_EXIST_ROOM_RS loadExistRoomRs;
+	bzero(loadExistRoomRs.user1Id, sizeof(loadExistRoomRs.user1Id));
+	bzero(loadExistRoomRs.user2Id, sizeof(loadExistRoomRs.user2Id));
 	GameRoom gm = *m_mapRoomNumToGameRoom[roomId];
 	loadExistRoomRs.roomId = roomId;
 	loadExistRoomRs.PlayerNum = gm.m_userIsExist1 + gm.m_userIsExist2;

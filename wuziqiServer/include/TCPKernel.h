@@ -5,6 +5,7 @@
 #include"block_epoll_net.h"
 #include "Mysql.h"
 #include "Timer.h"
+#include "redisConn.h"
 
 //类成员函数指针 , 用于定义协议映射表
 class TcpKernel;
@@ -42,6 +43,7 @@ private:
     ~TcpKernel();
     //数据库
     CMysql * m_sql;
+    RedisConn* m_redis;
     //网络
     Block_Epoll_Net * m_tcp;
     //协议映射表

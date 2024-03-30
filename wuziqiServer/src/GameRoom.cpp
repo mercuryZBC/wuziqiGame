@@ -35,9 +35,8 @@ void GameRoom::startGame()
 	curSide = blackSide;
 	STRU_GAME_STRAT gameStartPack;
 	gameStartPack.remainTime = 6000;
-	gameStartPack.user1isBlack = curSide;
+	gameStartPack.user1isBlack = !curSide;
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId1), (char*)&gameStartPack, sizeof(gameStartPack));
-	gameStartPack.user1isBlack = curSide;
 	m_pLogic->m_pKernel->SendData(m_pLogic->getSockUseUserId(m_userId2), (char*)&gameStartPack, sizeof(gameStartPack));
 	//m_timer->start(100,std::bind(&GameRoom::setRemainTime,this));
 }

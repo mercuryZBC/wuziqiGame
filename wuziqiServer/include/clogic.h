@@ -8,6 +8,8 @@
 #include <mutex>
 #include "GameRoom.h"
 #include "Timer.h"
+#include "redisConn.h"
+#include "dataModel.h"
 struct SERVER_FILE_INFO {
 	int fileSize;
 	char sendUserId[12];
@@ -19,14 +21,7 @@ struct SERVER_FILE_INFO {
 class CLogic
 {
 public:
-    CLogic( TcpKernel* pkernel )
-    {
-        m_pKernel = pkernel;
-        m_sql = pkernel->m_sql;
-        m_tcp = pkernel->m_tcp;
-		m_timer = new Timer();
-		m_timer->start(100,std::bind(&CLogic::timeout,this));
-    }
+    CLogic( TcpKernel* pkernel );
 	~CLogic(){
 		if (m_timer) {
 			delete m_timer;	
@@ -59,8 +54,10 @@ public:
 	void dealLoginRequestUsePassword(sock_fd sock,char* packet,int nlen);
 	//处理注册请求
 	void dealRegisterRequest(sock_fd sock, char* packet, int nlen);
-
-
+	//处理获取积分榜请求
+	void dealGetScoreRankRequest(sock_fd sock,char* packet,int nlen);
+	//处理匹配请求
+	void dealMatchRequest(sock_fd sock,char* packet,int nlen);
 	//处理获取好友列表请求
 	void dealFriendInfoRequest(sock_fd sock, char* packet, int nlen);//返回好友信息
 	//处理创建房间请求
@@ -75,6 +72,8 @@ public:
 	void playerIsReady(sock_fd sock, char* packet, int nlen);
 
 	void dealPlayerChess(sock_fd sock, char* packet, int nlen);
+	//测试QPS接口
+	void dealQpsTest(sock_fd sock,char* packet,int nlen);
 
 public:
 	//向其他在线好友发送上线通知
@@ -92,8 +91,10 @@ public:
 	TcpKernel* m_pKernel;
 private:
     CMysql * m_sql;
+	RedisConn* m_redis;
     Block_Epoll_Net * m_tcp;
 	Timer* m_timer;
+	dataModel* m_dataModel;
 };
 
 

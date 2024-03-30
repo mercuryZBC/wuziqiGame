@@ -81,15 +81,15 @@ void Block_Epoll_Net::EventLoop()
 {
     printf("EventLoop:server running\n");
     int  i = 0;
-    struct itimerval iti;
-    struct itimerval old_iti;
-    struct timeval new_tval;
-    new_tval.tv_sec = 0;
-    new_tval.tv_usec = 100000;//100毫秒
-    iti.it_interval = new_tval;
-    iti.it_value = new_tval;
-    setitimer(ITIMER_REAL,&iti,&old_iti);
-    signal(SIGALRM, sighander);
+    // struct itimerval iti;
+    // struct itimerval old_iti;
+    // struct timeval new_tval;
+    // new_tval.tv_sec = 0;
+    // new_tval.tv_usec = 100000;//100毫秒
+    // iti.it_interval = new_tval;
+    // iti.it_value = new_tval;
+    // setitimer(ITIMER_REAL,&iti,&old_iti);
+    // signal(SIGALRM, sighander);
     
     while (1) {
 

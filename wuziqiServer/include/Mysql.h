@@ -14,6 +14,7 @@ public:
     int SelectMySql(char* szSql,int nColumn,list<string>& lst);
     int UpdateMySql(char *szsql);
     void DisConnect();
+    void getAllUserData();
 private:
     MYSQL *conn;
 

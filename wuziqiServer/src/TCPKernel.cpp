@@ -4,6 +4,7 @@
 #include<stdio.h>
 #include<sys/time.h>
 #include"clogic.h"
+#include "redisConn.h"
 
 using namespace std;
 
@@ -51,6 +52,7 @@ int TcpKernel::Open( int port)
     {
         printf("MySql Connect Success...\n");
     }
+    m_redis = new RedisConn();
     //初始网络
     m_tcp = new Block_Epoll_Net;
     bool res = m_tcp->InitNet( port , &TcpKernel::DealData ) ;
