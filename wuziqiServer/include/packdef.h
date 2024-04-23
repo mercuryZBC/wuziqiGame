@@ -69,6 +69,11 @@
 
 #define GAME_COVER_SAVE_PATH "C:/Users/Mercury/Documents/GameCover/"
 #define GAME_PACK_SAVE_PATH "C:/Users/Mercury/Documents/GamePacket/"
+
+
+#define SERVER_CACERT "/home/ubuntu/wuziqiGame/wuziqiServer/certificate.pem"
+#define SERVER_PRIVATEKEY "/home/ubuntu/wuziqiGame/wuziqiServer/privkey.pem"
+
 typedef int MSG_TYPE;
 //协议头
 #define _DEF_UDP_PROTO_BASE (1000)

@@ -1,5 +1,6 @@
 #include<TCPKernel.h>
 #include "Timer.h"
+#include "err_str.h"
 #include "packdef.h"
 #include<stdio.h>
 #include<sys/time.h>
@@ -56,9 +57,13 @@ int TcpKernel::Open( int port)
     //初始网络
     m_tcp = new Block_Epoll_Net;
     bool res = m_tcp->InitNet( port , &TcpKernel::DealData ) ;
-    if( !res )
+    if( !res ){
         err_str( "net init fail:" ,-1);
-
+    }
+    res = m_tcp->InitOpenSSL();
+    if(!res){
+        err_str("openssl init fail", -1);
+    }
     m_logic = new CLogic(this);
 
     setNetPackMap();

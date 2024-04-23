@@ -14,4 +14,4 @@ set(mysqlclient /usr/local/mysql/lib/mysqlclient)
 target_link_libraries(${PROJECT_NAME} mysqlclient) 
 
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lredis++ -lhiredis -pthread")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lredis++ -lhiredis -pthread -lssl -lcrypto -ldl")

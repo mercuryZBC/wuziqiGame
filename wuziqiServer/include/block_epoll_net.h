@@ -18,7 +18,7 @@
 #include<vector>
 #include<list>
 #include<map>
-
+#include<openssl/ssl.h>
 #include"Thread_pool.h"
 
 #define MAX_EVENTS 4096
@@ -39,7 +39,7 @@ struct DataBuffer
     int sockfd;
     char* buf;
     int nlen;
-
+    SSL* ssl;
 };
 
 template<class K , class V>
@@ -114,15 +114,17 @@ struct myevent_s {
     int epoll_fd; //epoll_create 句柄
     int events; //EPOLLIN EPLLOUT
     int status;/* status:1表示在监听事件中，0表示不在 */
+    SSL *ssl;
     Block_Epoll_Net* pNet;
 
     myevent_s(Block_Epoll_Net* _pNet)
     {
         this->pNet = _pNet;
     }
-    void eventset(int fd ,int efd/*epoll_create返回的句柄*/)
+    void eventset(int fd ,int efd/*epoll_create返回的句柄*/,SSL *ssl)
     {
         this->fd = fd;
+        this->ssl = ssl;
         this->events = 0;
         this->status = 0;
         epoll_fd = efd;
@@ -170,6 +172,7 @@ public:
 public:
 
     //初始化 采用回调的方式, 解决数据接收处理
+    bool InitOpenSSL();
     bool InitNet(int port , void (*recv_callback)( int , char* , int ));
     //epoll事件循环
     void EventLoop();
@@ -202,9 +205,11 @@ private:
     int m_listenfd;
     // epoll_create 句柄
     int m_epoll_fd;
-
+    //SSL上下文
+    SSL_CTX *m_ctx;
     //每一个套接字 对应一个事件结构
     /*map*/MyMap< int , myevent_s*> m_mapSockfdToEvent;
+    MyMap<int, SSL*>m_mapSocketToSSL;
     /* 事件循环使用 */
     struct epoll_event events[MAX_EVENTS+1];
     //线程池相关

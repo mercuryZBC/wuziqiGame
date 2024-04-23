@@ -1,7 +1,44 @@
 #include "block_epoll_net.h"
+#include "packdef.h"
 #include <csignal>
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+
+bool Block_Epoll_Net::InitOpenSSL(){
+    /* SSL 库初始化 */
+    SSL_library_init();
+    /* 载入所有 SSL 算法 */
+    OpenSSL_add_all_algorithms();
+    /* 载入所有 SSL 错误消息 */
+    SSL_load_error_strings();
+    /* 以 SSL V2 和 V3 标准兼容方式产生一个 SSL_CTX ，即 SSL Content Text */
+    m_ctx = SSL_CTX_new(SSLv23_server_method());
+    /* 也可以用 SSLv2_server_method() 或 SSLv3_server_method() 单独表示 V2 或 V3标准 */
+    if (m_ctx == NULL) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+    /* 载入用户的数字证书， 此证书用来发送给客户端。 证书里包含有公钥 */
+    if (SSL_CTX_use_certificate_file(m_ctx, SERVER_CACERT, SSL_FILETYPE_PEM) <= 0) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+    /* 载入用户私钥 */
+    if (SSL_CTX_use_PrivateKey_file(m_ctx, SERVER_PRIVATEKEY, SSL_FILETYPE_PEM) <= 0) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+    /* 检查用户私钥是否正确 */
+    if (!SSL_CTX_check_private_key(m_ctx)) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+    printf("openssl init success...\n");
+    return true;
+}
+
 
 bool Block_Epoll_Net::InitNet(int port, void (*recv_callback)(int, char *, int))
 {
@@ -54,7 +91,7 @@ bool Block_Epoll_Net::InitNet(int port, void (*recv_callback)(int, char *, int))
     //create epoll
     m_epoll_fd = epoll_create( MAX_EVENTS );
 
-    m_listenEv->eventset(m_listenfd ,m_epoll_fd );
+    m_listenEv->eventset(m_listenfd ,m_epoll_fd,nullptr);
     //将监听套接字 添加到epoll中 , 模式LT 非阻塞
     m_listenEv->eventadd( EPOLLIN);
 
@@ -121,34 +158,48 @@ void Block_Epoll_Net::accept_event()
     struct sockaddr_in caddr;
     socklen_t len = sizeof(caddr);
     int clientfd ;
-    if ((clientfd = accept(m_listenfd, (struct sockaddr *)&caddr, &len)) == -1) {
+    if ((clientfd = accept(m_listenfd, (struct sockaddr *)&caddr, &len))>0) {
+        /* 基于 ctx 产生一个新的 SSL */
+        SSL *ssl = SSL_new(m_ctx);
+        /* 将连接用户的 socket 加入到 SSL */
+        SSL_set_fd(ssl, clientfd);
+        /* 建立 SSL 连接 */
+        if (SSL_accept(ssl) == -1) {
+            perror("accept");
+            close(clientfd);
+            printf("ssl accept failed\n");
+            return;
+        }else{
+            m_mapSocketToSSL.insert(clientfd, ssl);
+            printf("ssl_accept success fd:%d\n",clientfd);
+        }
+
+        //设置发送缓冲区大小
+        setSendBufSize(clientfd);
+        //设置接收缓冲器大小
+        setRecvBufSize( clientfd );
+        //设置 无延迟
+        setNoDelay( clientfd );
+
+        myevent_s * clientEv = new myevent_s(this);
+        clientEv->eventset( clientfd , m_epoll_fd,ssl);
+        // 使用EPOLLONESHOT epoll监听不会重复检测 避免多线程并发 使得同一个套接字接收是排队的
+        clientEv->eventadd(  EPOLLIN/*|EPOLLET*/|EPOLLONESHOT );
+
+        //m_mapSockfdToEvent[clientfd] = clientEv;
+        m_mapSockfdToEvent.insert(clientfd , clientEv);
+
+        printf("new connect [%s:%d][time:%ld] \n",
+            inet_ntoa(caddr.sin_addr), ntohs(caddr.sin_port), time(NULL) );
+
+    }else{
         if (errno != EAGAIN && errno != EINTR) {
             /* 暂时不做出错处理 */
         }
         printf("%s: accept, %s\n", __func__, strerror(errno));
         return;
     }
-//    //客户端接收使用阻塞模式 更简单 适合入门
-//    //设置非阻塞
-//    setNonBlockFd( clientfd );
 
-    //设置接收缓冲区大小
-    setRecvBufSize( clientfd );
-    //设置发送缓冲区大小
-    setRecvBufSize( clientfd );
-    //设置 无延迟
-    setNoDelay( clientfd );
-
-    myevent_s * clientEv = new myevent_s(this);
-    clientEv->eventset( clientfd , m_epoll_fd );
-    // 使用EPOLLONESHOT epoll监听不会重复检测 避免多线程并发 使得同一个套接字接收是排队的
-    clientEv->eventadd(  EPOLLIN/*|EPOLLET*/|EPOLLONESHOT );
-
-    //m_mapSockfdToEvent[clientfd] = clientEv;
-    m_mapSockfdToEvent.insert(clientfd , clientEv);
-
-    printf("new connect [%s:%d][time:%ld] \n",
-           inet_ntoa(caddr.sin_addr), ntohs(caddr.sin_port), time(NULL) );
     return;
 }
 
@@ -173,7 +224,7 @@ void* Block_Epoll_Net::recv_task(void* arg)
     char *pSzBuf = NULL;
     do
     {
-        nRelReadNum = read(ev->fd,&nPackSize,sizeof(nPackSize) );
+        nRelReadNum = SSL_read(ev->ssl,&nPackSize,sizeof(nPackSize) );
         if(nRelReadNum <= 0)
             break;
 
@@ -183,7 +234,7 @@ void* Block_Epoll_Net::recv_task(void* arg)
         //接收包的数据
         while(nPackSize)
         {
-            nRelReadNum = recv(ev->fd,pSzBuf+nOffSet,nPackSize,0);
+            nRelReadNum = SSL_read(ev->ssl,pSzBuf+nOffSet,nPackSize);
             if(nRelReadNum <= 0)
                 break;
 
@@ -257,9 +308,13 @@ int Block_Epoll_Net::SendData(int fd, char *szbuf, int nlen)
     *(int*)tmp = nlen;//按四个字节int写入
     tmp += sizeof(int );
     memcpy( tmp , szbuf , nlen );
-
-    int res = send( fd,(const char *)buf, nPackSize ,MSG_NOSIGNAL);
-
+    SSL* ssl;
+    m_mapSocketToSSL.find(fd, ssl);
+    int res=0;
+    //int res = send(fd,(const char*)buf,nPackSize,MSG_NOSIGNAL);
+    if(ssl){
+        res = SSL_write( ssl,(const char *)buf, nPackSize);
+    }
     return res;
 }
 

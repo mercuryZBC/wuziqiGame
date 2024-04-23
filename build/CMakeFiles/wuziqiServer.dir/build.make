@@ -73,141 +73,141 @@ CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o: CMakeFiles/wuziqiServer.dir/flag
 CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp
 CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp
 
 CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp > CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp > CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp -o CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/GameRoom.cpp -o CMakeFiles/wuziqiServer.dir/src/GameRoom.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp
 CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp
 
 CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp > CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp > CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp -o CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Mysql.cpp -o CMakeFiles/wuziqiServer.dir/src/Mysql.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp
 CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp
 
 CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp > CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp > CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp -o CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/TCPKernel.cpp -o CMakeFiles/wuziqiServer.dir/src/TCPKernel.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp
 CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp
 
 CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp > CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp > CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp -o CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Thread_pool.cpp -o CMakeFiles/wuziqiServer.dir/src/Thread_pool.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp
 CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/Timer.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp
 
 CMakeFiles/wuziqiServer.dir/src/Timer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/Timer.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp > CMakeFiles/wuziqiServer.dir/src/Timer.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp > CMakeFiles/wuziqiServer.dir/src/Timer.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/Timer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/Timer.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp -o CMakeFiles/wuziqiServer.dir/src/Timer.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/Timer.cpp -o CMakeFiles/wuziqiServer.dir/src/Timer.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp
 CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp
 
 CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp > CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp > CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp -o CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/block_epoll_net.cpp -o CMakeFiles/wuziqiServer.dir/src/block_epoll_net.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp
 CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/clogic.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp
 
 CMakeFiles/wuziqiServer.dir/src/clogic.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/clogic.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp > CMakeFiles/wuziqiServer.dir/src/clogic.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp > CMakeFiles/wuziqiServer.dir/src/clogic.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/clogic.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/clogic.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp -o CMakeFiles/wuziqiServer.dir/src/clogic.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/clogic.cpp -o CMakeFiles/wuziqiServer.dir/src/clogic.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp
 CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp
 
 CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp > CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp > CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp -o CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/dataModel.cpp -o CMakeFiles/wuziqiServer.dir/src/dataModel.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp
 CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/err_str.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp
 
 CMakeFiles/wuziqiServer.dir/src/err_str.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/err_str.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp > CMakeFiles/wuziqiServer.dir/src/err_str.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp > CMakeFiles/wuziqiServer.dir/src/err_str.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/err_str.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/err_str.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp -o CMakeFiles/wuziqiServer.dir/src/err_str.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/err_str.cpp -o CMakeFiles/wuziqiServer.dir/src/err_str.cpp.s
 
 CMakeFiles/wuziqiServer.dir/src/main.cpp.o: CMakeFiles/wuziqiServer.dir/flags.make
 CMakeFiles/wuziqiServer.dir/src/main.cpp.o: /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp
 CMakeFiles/wuziqiServer.dir/src/main.cpp.o: CMakeFiles/wuziqiServer.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/wuziqiGame/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/wuziqiServer.dir/src/main.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/main.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/main.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/main.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/wuziqiServer.dir/src/main.cpp.o -MF CMakeFiles/wuziqiServer.dir/src/main.cpp.o.d -o CMakeFiles/wuziqiServer.dir/src/main.cpp.o -c /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp
 
 CMakeFiles/wuziqiServer.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wuziqiServer.dir/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp > CMakeFiles/wuziqiServer.dir/src/main.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp > CMakeFiles/wuziqiServer.dir/src/main.cpp.i
 
 CMakeFiles/wuziqiServer.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wuziqiServer.dir/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp -o CMakeFiles/wuziqiServer.dir/src/main.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/wuziqiGame/wuziqiServer/src/main.cpp -o CMakeFiles/wuziqiServer.dir/src/main.cpp.s
 
 # Object files for target wuziqiServer
 wuziqiServer_OBJECTS = \

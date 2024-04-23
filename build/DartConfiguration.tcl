@@ -14,7 +14,7 @@ CostDataFile:
 Site: VM-8-4-ubuntu
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
-BuildName: Linux-g++
+BuildName: Linux-clang++
 
 # Subprojects
 LabelsForSubprojects: 
@@ -62,8 +62,8 @@ UpdateOptions:
 UpdateType: 
 
 # Compiler info
-Compiler: /usr/bin/g++
-CompilerVersion: 11.4.0
+Compiler: /usr/bin/clang++
+CompilerVersion: 14.0.0
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 
