@@ -17,7 +17,6 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QString userId,QWidget *parent = 0);
     ~MainWindow();
-
     GameDialog* m_pGameDialog =nullptr;
     Kernel* m_pKernel = nullptr;
     QString m_userId;
@@ -32,7 +31,7 @@ private slots:
     void on_pb_pve_clicked();
 
 
-private:
+public:
     Ui::MainWindow *ui;
 };
 

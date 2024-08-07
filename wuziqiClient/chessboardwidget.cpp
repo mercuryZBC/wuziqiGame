@@ -1,4 +1,4 @@
-#include <QPainter>
+﻿#include <QPainter>
 #include <QTimer>
 #include <QSound>
 #include <QMouseEvent>
@@ -8,7 +8,6 @@
 #include <QAction>
 #include <QDebug>
 #include <math.h>
-#include<GameModel.h>
 #include "chessboardwidget.h"
 #include "ui_chessboardwidget.h"
 #include"Config/GameConfig.h"

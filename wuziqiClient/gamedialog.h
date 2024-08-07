@@ -5,7 +5,6 @@
 #include"chessboardwidget.h"
 #include<QVBoxLayout>
 #include"playerinfo.h"
-#include<GameModel.h>
 #include"Config/GameConfig.h"
 #include"gameroomwidgetitem.h"
 namespace Ui {

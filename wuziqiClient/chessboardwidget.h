@@ -2,7 +2,6 @@
 #define CHESSBOARDWIDGET_H
 
 #include <QWidget>
-#include"GameModel.h"
 class GameDialog;
 namespace Ui {
 class ChessboardWidget;

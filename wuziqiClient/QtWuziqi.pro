@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     gamelobbydialog.cpp \
     gameroomwidgetitem.cpp \
         mainwindow.cpp \
-    GameModel.cpp \
     playerinfo.cpp \
     startdialog.cpp
 
@@ -25,7 +24,6 @@ HEADERS  += mainwindow.h \
     Config/ClientConfig.h \
     Config/GameConfig.h \
     Config/config.h \
-    GameModel.h \
     INet/INet.h \
     INet/TcpClientNet.h \
     Kernel/Kernel.h \
@@ -54,6 +52,12 @@ FORMS += \
     mainwindow.ui \
     playerinfo.ui \
     startdialog.ui
+
+win32 {
+INCLUDEPATH +=./include
+LIBS += -L$$quote(D:\APP\OpenSSL-Win64\lib\VC\x64\MD) -llibcrypto -llibssl \
+    -lws2_32
+}
 
 
 include(./LoginModel/LoginModel.pri)

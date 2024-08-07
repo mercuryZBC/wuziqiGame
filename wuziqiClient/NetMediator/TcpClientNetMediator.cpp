@@ -1,4 +1,4 @@
-#include"TcpClientNetMediator.h"
+﻿#include"TcpClientNetMediator.h"
 #include"../INet/TcpClientNet.h"
 
 TcpClientNetMediator::~TcpClientNetMediator()

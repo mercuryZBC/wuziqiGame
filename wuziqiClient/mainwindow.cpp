@@ -14,6 +14,7 @@
 #include "chessboardwidget.h"
 #include"gamelobbydialog.h"
 MainWindow::MainWindow(QString userId, QWidget *parent): QMainWindow(parent)
+  ,ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     m_userId = userId;

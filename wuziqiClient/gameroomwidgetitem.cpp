@@ -1,4 +1,4 @@
-#include "gameroomwidgetitem.h"
+﻿#include "gameroomwidgetitem.h"
 #include "ui_gameroomwidgetitem.h"
 #include<QMessageBox>
 GameRoomWidgetItem::GameRoomWidgetItem(STRU_LOAD_EXIST_ROOM_RS& pack,QWidget *parent) :
@@ -69,6 +69,7 @@ void GameRoomWidgetItem::on_pb_user1Icon_clicked()
     else{
         QMessageBox::information(this,"游戏提醒","当前座位已存在玩家");
     }
+    return;
 }
 
 
@@ -80,5 +81,6 @@ void GameRoomWidgetItem::on_pb_user2Icon_clicked()
     else{
         QMessageBox::information(this,"游戏提醒","当前座位已存在玩家");
     }
+    return;
 }
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include<string.h>
-#define _DEF_UDP_PORT (12345)
-#define _DEF_MAX_SIZE (100)
+//#define _DEF_UDP_PORT (8080)
+//#define _DEF_MAX_SIZE (100)
 #define _DEF_CONTENT_MAX (4096)
 #define FILE_BUFFER_SIZE (1024*100)
 #define VIDEO_CHAT_SIZE 131072
@@ -16,7 +16,7 @@ typedef int MSG_TYPE;
 #define _DEF_UDP_PROTO_BASE (1000)
 
 //服务端ip
-#define _DEF_SERVER_IP "182.92.101.102"
+#define _DEF_SERVER_IP "139.199.75.53"
 
 
 
@@ -30,7 +30,7 @@ typedef int MSG_TYPE;
 
 #define _DEF_FILE_TRANS_DATA_SIZE 4096
 #define _DEF_PHONE_NUM_LEN (11)
-#define _DEF_TCP_PORT (12345)
+#define _DEF_TCP_PORT (8080)
 
 #define _DEF_TCP_PROTO_BASE (2000)
 
